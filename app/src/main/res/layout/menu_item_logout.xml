@@ -1,0 +1,9 @@
+<Button xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/logoutButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="46dp"
+    android:text="Logout"
+    android:paddingVertical="15dp"
+    android:paddingHorizontal="40dp"
+    style="?android:attr/borderlessButtonStyle" />

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/baseline_location_city_24"
+    android:insetLeft="17dp"
+    android:insetRight="1dp"
+    android:insetBottom="5dp"/>
