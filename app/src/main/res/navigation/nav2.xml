@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.example.portal.FirstFragment"
+        android:name="com.example.myapplicationdrawer.FirstFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_first">
 
@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/SignupFragment"
-        android:name="com.example.portal.signup"
+        android:name="com.example.myapplicationdrawer.signup"
         android:label="@string/signup_fragment_label"
         tools:layout="@layout/fragment_signup">
 
@@ -32,7 +32,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.portal.ui.home.HomeFragment"
+        android:name="com.example.myapplicationdrawer.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -42,13 +42,13 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.example.portal.ui.gallery.GalleryFragment"
+        android:name="com.example.myapplicationdrawer.ui.gallery.GalleryFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.example.portal.ui.slideshow.SlideshowFragment"
+        android:name="com.example.myapplicationdrawer.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
 

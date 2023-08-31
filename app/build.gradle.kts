@@ -6,11 +6,11 @@ plugins {
     id("kotlin-kapt")
 }
 android {
-    namespace = "com.example.portal"
+    namespace = "com.example.myapplicationdrawer"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.example.portal"
+        applicationId = "com.example.myapplicationdrawer"
         minSdk = 24
         targetSdk = 33
         versionCode = 1

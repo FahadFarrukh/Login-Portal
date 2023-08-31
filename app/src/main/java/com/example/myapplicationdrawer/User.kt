@@ -1,4 +1,4 @@
-package com.example.portal
+package com.example.myapplicationdrawer
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

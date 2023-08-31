@@ -1,4 +1,4 @@
-package com.example.portal
+package com.example.myapplicationdrawer
 
 import android.content.Context
 import android.os.Build
@@ -25,7 +25,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.room.Room
-import com.example.portal.databinding.ActivityMainBinding
+import com.example.myapplicationdrawer.databinding.ActivityMainBinding
+import com.example.myapplicationdrawer.databinding.NavHeaderMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -36,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var db: AppDatabase
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -43,6 +45,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.appBarMain.toolbar)
+
+
 
 
 
@@ -86,6 +90,19 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
+
+//        Thread {
+//
+//            val firstname = db.UserDao().firstname() ?: "Unknown Firstname"
+//            val lastname = db.UserDao().lastname() ?: "Unknown Lastname"
+//            val email1 = db.UserDao().email() ?: "Unknown Email"
+//
+//            runOnUiThread {
+//                usernameTextView.text="$firstname $lastname"
+//                emailTextView.text= email1
+//            }
+//        }.start()
 
 
        // Initialize sessionManager
@@ -189,7 +206,14 @@ class MainActivity : AppCompatActivity() {
         builder.setMessage("Are you sure you want to log out?")
         builder.setPositiveButton("Yes") { dialogInterface, _ ->
             sessionManager.logout()
-            findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.FirstFragment)
+
+            // Set the navigation graph to the logged-out state
+            val navController = findNavController(R.id.nav_host_fragment_content_main)
+
+
+            // Pop the back stack to remove the HomeFragment
+            navController.popBackStack()
+
             dialogInterface.dismiss()
         }
         builder.setNegativeButton("No") { dialogInterface, _ ->
@@ -198,5 +222,40 @@ class MainActivity : AppCompatActivity() {
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }
+
+    override fun onBackPressed() {
+        val navController = findNavController(R.id.nav_host_fragment_content_main)
+
+        // Get the current destination ID
+        val currentDestinationId = navController.currentDestination?.id
+
+        // Check if the current fragment is FirstFragment or SignupFragment
+        if (currentDestinationId == R.id.FirstFragment || currentDestinationId == R.id.SignupFragment) {
+            super.onBackPressed()
+        } else {
+            // Show the logout confirmation dialog for other fragments
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Logout")
+            builder.setMessage("Are you sure you want to log out?")
+            builder.setPositiveButton("Yes") { dialogInterface, _ ->
+                sessionManager.logout()
+
+                // Set the navigation graph to the logged-out state
+                val navController = findNavController(R.id.nav_host_fragment_content_main)
+
+                // Pop the back stack to remove the HomeFragment
+                navController.popBackStack()
+
+                dialogInterface.dismiss()
+            }
+            builder.setNegativeButton("No") { dialogInterface, _ ->
+                dialogInterface.dismiss()
+            }
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
+        }
+    }
+
+
 
 }

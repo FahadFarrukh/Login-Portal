@@ -1,4 +1,4 @@
-package com.example.portal.ui.slideshow
+package com.example.myapplicationdrawer.ui.slideshow
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,9 +9,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
-import com.example.portal.AppDatabase
-import com.example.portal.R
-import com.example.portal.databinding.FragmentSlideshowBinding
+import com.example.myapplicationdrawer.AppDatabase
+import com.example.myapplicationdrawer.R
+import com.example.myapplicationdrawer.databinding.FragmentSlideshowBinding
 
 class SlideshowFragment : Fragment() {
 

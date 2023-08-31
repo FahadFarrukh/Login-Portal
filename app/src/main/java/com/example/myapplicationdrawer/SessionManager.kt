@@ -1,11 +1,11 @@
-package com.example.portal
+package com.example.myapplicationdrawer
 
 import android.content.Context
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.LiveData
 import androidx.room.Room
-import com.example.portal.AppDatabase
-import com.example.portal.User
+import com.example.myapplicationdrawer.AppDatabase
+import com.example.myapplicationdrawer.User
 
 class SessionManager(private val context: Context) {
 

@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Portal"
+rootProject.name = "My Applicationdrawer"
 include(":app")

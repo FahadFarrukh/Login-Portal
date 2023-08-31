@@ -1,10 +1,8 @@
-package com.example.portal
+package com.example.myapplicationdrawer
 
 import android.os.Bundle
 import android.text.InputType
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
@@ -12,12 +10,12 @@ import android.widget.TextView
 import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.core.content.ContextCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.room.Room
-import com.example.portal.AppDatabase
-import com.example.portal.databinding.FragmentFirstBinding
+import com.example.myapplicationdrawer.databinding.FragmentFirstBinding
 import com.google.android.material.navigation.NavigationView
 
 class FirstFragment : Fragment() {
@@ -26,7 +24,7 @@ class FirstFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var db: AppDatabase
-    private lateinit var sessionManager: SessionManager // Add this line
+    private lateinit var sessionManager: SessionManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,29 +36,27 @@ class FirstFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setHasOptionsMenu(true)
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
 
+        val drawerLayout = requireActivity().findViewById<DrawerLayout>(R.id.drawer_layout)
+        drawerLayout?.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
 
+        // Find views within the fragment's layout
+        val togglePassword: ToggleButton = binding.togglePassword
+        val editTextPassword: EditText = binding.editText4
 
-
+        // Initialize database and session manager
         db = Room.databaseBuilder(
             requireContext(),
-            AppDatabase::class.java,
-            "user-database"
-        ).build()
+            AppDatabase::class.java, "user-database"
+        ).fallbackToDestructiveMigration().build()
 
-//        val navigationView = requireView().findViewById<NavigationView>(R.id.nav_view)
-//        val headerView = navigationView.getHeaderView(0)
-//
-//        val usernameTextView = headerView.findViewById<TextView>(R.id.textViewff)
-//        val emailTextView = headerView.findViewById<TextView>(R.id.textViewee)
-
-        sessionManager = SessionManager(requireContext()) // Initialize sessionManager
+        sessionManager = SessionManager(requireContext())
 
         binding.buttonFirst.setOnClickListener {
             val email = binding.editTexte.text.toString()
@@ -68,16 +64,24 @@ class FirstFragment : Fragment() {
 
             Thread {
                 val user = db.UserDao().getUser(email, password)
-                val firstname = db.UserDao().firstname() ?: "Unknown Firstname"
-                val lastname = db.UserDao().lastname() ?: "Unknown Lastname"
-                val email1 = db.UserDao().email() ?: "Unknown Email"
 
+                val email1 = db.UserDao().email() ?: "Unknown Lastname"
+                val user2 = db.UserDao().getUserByEmail(email)
                 requireActivity().runOnUiThread {
                     if (user != null) {
-                        // User found, update session and navigate
+                        // User found, update session
                         sessionManager.login(requireContext(), email)
-                //        usernameTextView.text = "$firstname $lastname"
-                //        emailTextView.text = email1
+
+                        // Update the header TextViews in the NavigationView
+                        val navHeaderView = requireActivity().findViewById<NavigationView>(R.id.nav_view).getHeaderView(0)
+                        val usernameTextView = navHeaderView.findViewById<TextView>(R.id.textViewff)
+                        val emailTextView = navHeaderView.findViewById<TextView>(R.id.textViewee)
+
+                        val firstname = user.firstname
+                        val lastname = user.lastname
+                        usernameTextView.text = "$firstname $lastname"
+                        emailTextView.text = user.email
+
                         loginSuccess(user)
                     } else {
                         // User not found, show error toast
@@ -85,20 +89,11 @@ class FirstFragment : Fragment() {
                     }
                 }
             }.start()
-
-
-
-
-
-
-    }
+        }
 
         binding.textview4.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SignupFragment)
         }
-
-        val togglePassword: ToggleButton = view.findViewById(R.id.togglePassword)
-        val editTextPassword: EditText = view.findViewById(R.id.editText4)
 
         togglePassword.setOnClickListener {
             val inputType = if (editTextPassword.inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
@@ -110,17 +105,39 @@ class FirstFragment : Fragment() {
             editTextPassword.setSelection(editTextPassword.text.length)
         }
     }
+
     private fun loginSuccess(user: User) {
         // Save login status and user ID to session
         sessionManager.isLoggedIn = true
         sessionManager.loggedInUserId = user.id
 
-        // Proceed to the main fragment or any other action
+        // Set the flag to indicate successful login
+        findNavController().previousBackStackEntry?.savedStateHandle?.set("loginSuccess", true)
+
+        // Proceed to the HomeFragment
         findNavController().navigate(R.id.action_FirstFragment_to_HomeFragment)
     }
+    override fun onResume() {
+        super.onResume()
+
+        // Check if the login was successful
+        val loginSuccess = findNavController().currentBackStackEntry?.savedStateHandle?.get<Boolean>("loginSuccess")
+
+        if (loginSuccess == true) {
+            // Clear the flag
+            findNavController().currentBackStackEntry?.savedStateHandle?.remove<Boolean>("loginSuccess")
+
+            // Navigate to the HomeFragment without adding it to the back stack
+            findNavController().navigate(R.id.action_FirstFragment_to_HomeFragment)
+        }
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
+        val drawerLayout = requireActivity().findViewById<DrawerLayout>(R.id.drawer_layout)
+        drawerLayout?.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+
         _binding = null
     }
 }

@@ -1,4 +1,4 @@
-package com.example.portal
+package com.example.myapplicationdrawer
 
 import android.os.Bundle
 import android.text.InputType
@@ -15,7 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.room.Room
-import com.example.portal.databinding.FragmentSignupBinding
+import com.example.myapplicationdrawer.databinding.FragmentSignupBinding
 
 
 

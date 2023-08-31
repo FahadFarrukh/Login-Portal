@@ -1,4 +1,4 @@
-//package com.example.portal
+//package com.example.myapplicationdrawer
 //
 //public class Session {
 //

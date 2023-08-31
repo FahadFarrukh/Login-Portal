@@ -1,4 +1,4 @@
-package com.example.portal
+package com.example.myapplicationdrawer
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -35,4 +35,5 @@ interface UserDao {
 
     @Query("SELECT email FROM user where login = 1")
     fun email(): String
+
 }

@@ -1,4 +1,4 @@
-package com.example.portal.ui.gallery
+package com.example.myapplicationdrawer.ui.gallery
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,10 +9,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
-import com.example.portal.AppDatabase
-import com.example.portal.UserAdapter
-import com.example.portal.databinding.FragmentGalleryBinding
-import com.example.portal.SessionManager
+import com.example.myapplicationdrawer.AppDatabase
+import com.example.myapplicationdrawer.UserAdapter
+import com.example.myapplicationdrawer.databinding.FragmentGalleryBinding
+import com.example.myapplicationdrawer.SessionManager
 
 class GalleryFragment : Fragment() {
 

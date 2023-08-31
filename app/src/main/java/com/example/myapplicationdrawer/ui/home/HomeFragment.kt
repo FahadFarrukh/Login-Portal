@@ -1,4 +1,4 @@
-package com.example.portal.ui.home
+package com.example.myapplicationdrawer.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,9 +9,9 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.portal.R
-import com.example.portal.databinding.FragmentHomeBinding
-import com.example.portal.SessionManager
+import com.example.myapplicationdrawer.R
+import com.example.myapplicationdrawer.databinding.FragmentHomeBinding
+import com.example.myapplicationdrawer.SessionManager
 
 class HomeFragment : Fragment() {
 
