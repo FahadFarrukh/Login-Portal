@@ -1,2 +1,2 @@
 # Login-Portal
-A Kotlin based login portal which is halfway done, and is currently in progress to be completed.
+A Kotlin based login portal which is halfway done, and is currently in progress to be completed. Till now, a proper structure for login and logout is created, Room database is currently being used to saved signed up users, the the database is accessed and the entry is checked in the login process. Session login is also implemented, proper error handling is done, side navigation drawer is also locked on login and signup page, and stack is popped after logout so that user cannot go back to home screen after pressing back.
